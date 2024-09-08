@@ -3,6 +3,7 @@ package com.security.springbootsecurityjwt.controller;
 import com.security.springbootsecurityjwt.dto.JwtResponseDto;
 import com.security.springbootsecurityjwt.dto.LoginDto;
 import com.security.springbootsecurityjwt.dto.RegisterDto;
+import com.security.springbootsecurityjwt.dto.UserDto;
 import com.security.springbootsecurityjwt.exceptions.JwtAuthenticationException;
 import com.security.springbootsecurityjwt.security.JwtGenerator;
 import com.security.springbootsecurityjwt.service.RolService;
@@ -56,5 +57,10 @@ public class AuthController {
 
         JwtResponseDto jwtRefresh = new JwtResponseDto(token);
         return new ResponseEntity<JwtResponseDto>(jwtRefresh, HttpStatus.OK);
+    }
+
+    @GetMapping("/logued")
+    public ResponseEntity<UserDto> getLoguedUser(@RequestHeader HttpHeaders headers){
+        return new ResponseEntity<>(userService.getLoguedUser(headers), HttpStatus.OK);
     }
 }

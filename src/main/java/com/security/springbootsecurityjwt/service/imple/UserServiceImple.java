@@ -83,4 +83,19 @@ public class UserServiceImple implements UserService {
         }
     }
 
+    @Override
+    public UserDto getLoguedUser(HttpHeaders headers) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = ((User) authentication.getPrincipal()).getUsername();
+
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new NotFoundException("Usuario no encontrado"));
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setUsername(user.getUsername());
+        userDto.setRoles(user.getRoles());
+        return userDto;
+    }
+
 }
